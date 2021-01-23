@@ -1,0 +1,76 @@
+{% extends 'tableDataViewBase.html' %}
+
+{%block title%}Детали{%endblock%}
+
+{% block data %}
+    {%for d in data_table%}
+        <tr>
+            <td contenteditable='false'>{{d.id}}</td>
+            <td contenteditable='false'>{{d.number}}</td>
+            <td contenteditable='false'>{{d.name}}</td>
+            <td contenteditable='false'>{{d.stanok_id}}</td>
+            <td contenteditable='false'>{{d.sklad_id}}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+
+{%block addForm%}
+    <form action="{% url 'detalAddData' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" required placeholder="Номер" name="number"><br>
+        <input type="text" required placeholder="Название" name="name"><br>
+            {% if stanoks %}
+            <p>Станки
+            <select required name="stanok" multiple><br>
+                {% for item in stanoks %}
+                    <option>{{item.id}}</option><br>
+                {% endfor %}
+            </select></p>
+            {% else %}
+                Нет станков участков
+            {% endif %}
+            <p>Скалды
+            <select required name="sklad" multiple><br>
+                {% for item in sklads %}
+                    <option>{{item.id}}</option><br>
+                {% endfor %}
+            </select></p>
+        <button type="submit">Добавить запись</button>
+    </form>
+{%endblock%}
+
+{% block updateForm %}
+     <form action="{% url 'detalUpdateData' %}" method="POST">
+        {% csrf_token %}
+         <input type="text" required placeholder="id" name="update_id"><br>
+         <input type="text" required placeholder="Номер" name="number"><br>
+        <input type="text" required placeholder="Название" name="name"><br>
+        {% if stanoks %}
+            <p>Станки
+            <select required name="stanok" multiple><br>
+                {% for item in stanoks %}
+                    <option>{{item.id}}</option><br>
+                {% endfor %}
+            </select></p>
+            {% else %}
+                Нет станков
+            {% endif %}
+         <p>Скалды
+            <select required name="sklad" multiple><br>
+                {% for item in sklads %}
+                    <option>{{item.id}}</option><br>
+                {% endfor %}
+            </select></p>
+        <button type="submit">Обновить запись</button>
+    </form>
+{% endblock %}
+
+{% block removeForm %}
+    <form action="{% url 'detalRemoveData' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" required placeholder="id" name="remove_id"><br>
+        <button type="submit">Удалить запись</button>
+    </form>
+{%endblock%}
+
+{% block refresh%}<a href="{% url 'detalRefresh' %}">Обновить таблицу</a>{% endblock %}

@@ -1,0 +1,270 @@
+{% extends 'base.html' %}
+
+{% block style %}
+.table {
+	width: 100%;
+	border: none;
+	margin-bottom: 20px;
+}
+.table thead th {
+	font-weight: bold;
+	text-align: left;
+	border: none;
+	padding: 10px 15px;
+	background: #d8d8d8;
+	font-size: 14px;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+}
+.table tbody td {
+	text-align: left;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	padding: 10px 15px;
+	font-size: 14px;
+	vertical-align: top;
+}
+.table thead tr th:first-child, .table tbody tr td:first-child {
+	border-left: none;
+}
+.table thead tr th:last-child, .table tbody tr td:last-child {
+	border-right: none;
+}
+.table tbody tr:nth-child(even){
+	background: #f3f3f3;
+}
+
+body {margin:0;}
+
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  background: #f1f1f1;
+  color: black;
+}
+
+.navbar a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.navbar a.cancle {
+  background-color: #8B0000;
+  color: white;
+}
+
+.navbar a.update {
+  background-color: #DAA520;
+  color: white;
+}
+
+.main {
+  padding: 16px;
+  margin-bottom: 30px;
+}
+
+
+#remove {
+        background: rgba(102, 102, 102, 0.5);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none;
+      }
+      #remove_okno {
+        width: 300px;
+        height: 400px;
+        text-align: center;
+        padding: 15px;
+        border: 3px solid #80c8a0;
+        border-radius: 10px;
+        color: #808080;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        background: #fff;
+      }
+      #remove:target {display: block;}
+      .close {
+        display: inline-block;
+        border: 1px solid #80c8a0;
+        color: #808080;
+        padding: 0 12px;
+        margin: 10px;
+        text-decoration: none;
+        background: #f2f2f2;
+        font-size: 14pt;
+        cursor:pointer;
+      }
+      .close:hover {background: #e6e6ff;}
+
+#add {
+        background: rgba(102, 102, 102, 0.5);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none;
+      }
+      #add_okno {
+        width: 300px;
+        height: 400px;
+        text-align: center;
+        padding: 15px;
+        border: 3px solid #80c8a0;
+        border-radius: 10px;
+        color: #808080;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        background: #fff;
+      }
+      #add:target {display: block;}
+      .close {
+        display: inline-block;
+        border: 1px solid #80c8a0;
+        color: #808080;
+        padding: 0 12px;
+        margin: 10px;
+        text-decoration: none;
+        background: #f2f2f2;
+        font-size: 14pt;
+        cursor:pointer;
+      }
+      .close:hover {background: #e6e6ff;}
+
+#update {
+        background: rgba(102, 102, 102, 0.5);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none;
+      }
+      #update_okno {
+        width: 300px;
+        height: 400px;
+        text-align: center;
+        padding: 15px;
+        border: 3px solid #80c8a0;
+        border-radius: 10px;
+        color: #808080;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        background: #fff;
+      }
+      #update:target {display: block;}
+      .close {
+        display: inline-block;
+        border: 1px solid #80c8a0;
+        color: #808080;
+        padding: 0 12px;
+        margin: 10px;
+        text-decoration: none;
+        background: #f2f2f2;
+        font-size: 14pt;
+        cursor:pointer;
+      }
+      .close:hover {background: #e6e6ff;}
+
+
+{% endblock %}
+
+{%block script%}
+function myFunction(myMessage) {
+    alert(document.getElementsByClassName('table')[0].rows[1].cells[1].innerHTML);
+}
+{%endblock%}
+
+{% block content %}
+    {% if titles %}
+     <table class="table" id="data_table">
+            <tr>
+                {% for title in titles %}
+                <th> {{title}} </th>
+                {% endfor %}
+            </tr>
+                {% block data %} {% endblock %}
+        </table>
+    {% else %}
+        Нет заголовков
+    {% endif %}
+    {% if data_table %}
+    {% else %}
+        <h3 align="center">Нет данных :(</h3>
+    {% endif %}
+
+    <div id="add">
+      <div id="add_okno">
+          <h3>Добавить запись</h3><br>
+            <div>
+                {%block addForm%}{%endblock%}
+            </div>
+        <a href="#" class="close">Закрыть окно</a>
+      </div>
+    </div>
+
+    <div id="remove">
+      <div id="remove_okno">
+          <h3>Удалить запись</h3><br>
+            <div>
+                {% block removeForm %}{%endblock%}
+            </div>
+        <a href="#" class="close">Закрыть окно</a>
+      </div>
+    </div>
+
+    <div id="update">
+          <div id="update_okno">
+              <h3>Обновить запись</h3><br>
+                <div>
+                    {% block updateForm %}{%endblock%}
+                </div>
+            <a href="#" class="close">Закрыть окно</a>
+          </div>
+        </div>
+
+
+{%block navmenu%}
+    <div class="navbar">
+        <a href="#add" class="active">Добавить запись</a>
+        <a href="#update" class="update">Изменить запись</a>
+        <a href="#remove" class="cancle">Удалить запись</a>
+      {% block refresh%}<a href="{% url 'refresh' %}">Обновить таблицу</a>{% endblock %}
+        <a href="{% url 'skladAdminIndex' %}">Назад</a>
+    </div>
+{% endblock %}
+
+
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'tableDataViewBase.html' %}
+
+{%block title%}Работники склада{%endblock%}
+
+{% block data %}
+    {%for d in data_table%}
+        <tr>
+            <td contenteditable='false'>{{d.id}}</td>
+            <td contenteditable='false'>{{d.number}}</td>
+            <td contenteditable='false'>{{d.username}}</td>
+            <td contenteditable='false'>{{d.first_name}}</td>
+            <td contenteditable='false'>{{d.last_name}}</td>
+            <td contenteditable='false'>{{d.password}}</td>
+            <td contenteditable='false'>{{d.birhtday}}</td>
+            <td contenteditable='false'>{{d.contact_number}}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+
+{%block addForm%}
+    <form action="{% url 'skladUserAddDataIndex' %}" method="POST">
+        {% csrf_token %}
+        <input type="number" required placeholder="Номер" name="number"><br>
+        <input type="text" required placeholder="Логин" name="username"><br>
+        <input type="text" required placeholder="Имя" name="first_name"><br>
+        <input type="text" required placeholder="Фамилия" name="last_name"><br>
+        <input type="password" required placeholder="Пароль" name="password"><br>
+        <input type="date" required placeholder="Дата рождения" name="birthday"><br>
+        <input type="text" required placeholder="Контактный номер" name="contact_number"><br>
+        <button type="submit">Добавить запись</button>
+    </form>
+{%endblock%}
+
+{% block updateForm %}
+     <form action="{% url 'skladUserUpdateDataIndex' %}" method="POST">
+        {% csrf_token %}
+         <input type="text" required placeholder="id" name="update_id"><br>
+         <input type="number" required placeholder="Номер" name="number"><br>
+         <input type="text" required placeholder="Логин" name="username"><br>
+         <input type="text" required placeholder="Имя" name="first_name"><br>
+         <input type="text" required placeholder="Фамилия" name="last_name"><br>
+        <input type="password" required placeholder="Пароль" name="password"><br>
+        <input type="date" required placeholder="Дата рождения" name="birthday"><br>
+         <input type="text" required placeholder="Контактный номер" name="contact_number"><br>
+        <button type="submit">Обновить запись</button>
+    </form>
+{% endblock %}
+
+{% block removeForm %}
+    <form action="{% url 'skladUserDeleteDataIndex' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" required placeholder="id" name="remove_id"><br>
+        <button type="submit">Удалить запись</button>
+    </form>
+{%endblock%}
+
+{% block navmenu %}
+
+    <div class="navbar">
+        <a href="#add" class="active">Добавить запись</a>
+        <a href="#update" class="update">Изменить запись</a>
+        <a href="#remove" class="cancle">Удалить запись</a>
+      <a href="{% url 'skladUserDataIndex' %}">Обновить таблицу</a>
+        <a href="{% url 'systemAdminIndex' %}">Назад</a>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'tableDataViewBase.html' %}
+
+{%block title%}Склады{%endblock%}
+
+{% block data %}
+    {%for d in data_table%}
+        <tr>
+            <td contenteditable='false'>{{d.id}}</td>
+            <td contenteditable='false'>{{d.adress}}</td>
+            <td contenteditable='false'>{{d.square}}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+
+{%block addForm%}
+    <form action="{% url 'skladAddData' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" required placeholder="Адрес" name="adress"><br>
+        <input type="number" step="any" required placeholder="Площадь склада" name="square"><br>
+        <button type="submit">Добавить запись</button>
+    </form>
+{%endblock%}
+
+{% block updateForm %}
+     <form action="{% url 'skladUpdateData' %}" method="POST">
+        {% csrf_token %}
+         <input type="text" required placeholder="id" name="update_id"><br>
+        <input type="text" required placeholder="Адрес" name="adress"><br>
+         <input type="number" step="any" required placeholder="Площадь склада" name="square"><br>
+        <button type="submit">Обновить запись</button>
+    </form>
+{% endblock %}
+
+{% block removeForm %}
+    <form action="{% url 'skladRemoveData' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" required placeholder="id" name="remove_id"><br>
+        <button type="submit">Удалить запись</button>
+    </form>
+{%endblock%}
+
+{% block refresh%}<a href="{% url 'skladRefresh' %}">Обновить таблицу</a>{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'tableDataViewBase.html' %}
+
+{%block title%}Станки{%endblock%}
+
+{% block data %}
+    {%for d in data_table%}
+        <tr>
+            <td contenteditable='false'>{{d.id}}</td>
+            <td contenteditable='false'>{{d.name}}</td>
+            <td contenteditable='false'>{{d.type}}</td>
+            <td contenteditable='false'>{{d.start_date}}</td>
+            <td contenteditable='false'>{{d.end_date}}</td>
+            <td contenteditable='false'>{{d.lifetime}}</td>
+            <td contenteditable='false'>{{d.proizvodstvo_id}}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+
+{%block addForm%}
+    <form action="{% url 'stanoksAddData' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" required placeholder="Название" name="name"><br>
+        <input type="text" required placeholder="Тип" name="type"><br>
+        <input type="date" required placeholder="Начало эксплуатации" name="start_date"><br>
+        <input type="date" required placeholder="Конец эксплуатации" name="end_date"><br>
+
+            {% if proizvs %}
+            <p>Производства
+            <select required name="proizv" multiple><br>
+                {% for item in proizvs %}
+                    <option>{{item.id}}</option><br>
+                {% endfor %}
+            </select></p>
+            {% else %}
+                Нет производственных участков
+            {% endif %}
+        <button type="submit">Добавить запись</button>
+    </form>
+{%endblock%}
+
+{% block updateForm %}
+     <form action="{% url 'stanoksUpdateData' %}" method="POST">
+        {% csrf_token %}
+         <input type="text" required placeholder="id" name="update_id"><br>
+       <input type="text" required placeholder="Название" name="name"><br>
+        <input type="text" required placeholder="Тип" name="type"><br>
+        <input type="date" required placeholder="Начало эксплуатации" name="start_date"><br>
+        <input type="date" required placeholder="Конец эксплуатации" name="end_date"><br>
+        {% if proizvs %}
+            <p>Производства
+            <select required name="proizv" multiple><br>
+                {% for item in proizvs %}
+                    <option>{{item.id}}</option><br>
+                {% endfor %}
+            </select></p>
+            {% else %}
+                Нет производственных участков
+            {% endif %}
+        <button type="submit">Обновить запись</button>
+    </form>
+{% endblock %}
+
+{% block removeForm %}
+    <form action="{% url 'stanoksRemoveData' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" required placeholder="id" name="remove_id"><br>
+        <button type="submit">Удалить запись</button>
+    </form>
+{%endblock%}
+
+{% block refresh%}<a href="{% url 'refresh' %}">Обновить таблицу</a>{% endblock %}

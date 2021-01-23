@@ -1,0 +1,26 @@
+{% extends 'tableDataViewBase.html' %}
+
+{%block title%}Ваши накладные{%endblock%}
+
+{% block data %}
+    {%for d in data_table%}
+        <tr>
+            <td contenteditable='false'>{{d.id}}</td>
+            <td contenteditable='false'>{{d.sklad_id}}</td>
+            <td contenteditable='false'>{{d.detal_number}}</td>
+            <td contenteditable='false'>{{d.detal_name}}</td>
+            <td contenteditable='false'>{{d.remontnik}}</td>
+            <td contenteditable='false'>{{d.recive_date}}</td>
+            <td contenteditable='false'>{{d.price}}</td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+
+{% block navmenu %}
+
+    <div class="navbar">
+      {% block refresh%}<a href="{% url 'rabotnikNaklsIndex' %}">Обновить таблицу</a>{% endblock %}
+        <a href="{% url 'rabotnikIndex' %}">Назад</a>
+    </div>
+
+{% endblock %}
